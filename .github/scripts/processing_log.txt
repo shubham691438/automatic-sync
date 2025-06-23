@@ -36,3 +36,35 @@
 [2025-06-23 18:33:31 UTC] [CRITICAL] Unexpected error processing date 20250615: Command '['curl', '-v', '--max-time', '120', '--connect-timeout', '30', '--retry', '3', '--retry-delay', '5', '--location', 'https://ene-apply-batch-orchestrator.prod.joveo.com/api/trigger', '--header', 'Content-Type: application/json', '--header', "Cookie: CTK=6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4'", '--data', '{"jobName": "ene-ats-integration-batch-prod-uber-stage5362df53-ad63-4c7a-9be1-f2b33fc83e74_20250615", "jobQueue": "ene-ats-integration-batch-prod-uber-stage", "jobDefinition": "ene-ats-integration-batch-prod", "envVars": {"spring.config.import": "configserver:http://spring-config-server.prod.joveo.com:8888/", "SPRING_CONFIG_SERVER_URL": "spring-config-server.prod.joveo.com", "ENVIRONMENT": "production", "name": "ADECCO_BULLHORN_APPLY_EVENT_SYNCER", "JOVEO_ENV": "production", "id": "funneltracking/bullhorn/adecco/GeneralStaffing/BH_AGS_JOB_SUBMISSION_JOVEO_OUT_20250615.csv$5362df53-ad63-4c7a-9be1-f2b33fc83e74,78a64614-9ca3-4b42-824c-4aac37237984,51a55bc3-c156-4c8f-9f6e-1bbe7f496d0f", "SPRING_CONFIG_SERVER_PORT": "8888", "receiptHandle": "test"}}']' timed out after 45 seconds
 [2025-06-23 18:33:31 UTC] [CRITICAL] Aborting: 3 consecutive failures reached
 [2025-06-23 18:33:31 UTC] [INFO] Processing complete for this run.
+[2025-06-23 18:36:41 UTC] [DEBUG] Loaded existing state: {
+  "current_date": "20250615",
+  "start_date": "20250615",
+  "end_date": "20250623",
+  "processed_dates": [],
+  "failed_attempts": {
+    "20250615": 3
+  },
+  "last_run": "2025-06-23T18:32:46.618900",
+  "consecutive_failures": 3
+}
+[2025-06-23 18:36:41 UTC] [INFO] Attempting to process date: 20250615
+[2025-06-23 18:36:41 UTC] [DEBUG] API Command: curl -v --max-time 120 --connect-timeout 30 --retry 3 --retry-delay 5 --location https://ene-apply-batch-orchestrator.prod.joveo.com/api/trigger --header Content-Type: application/json --header Cookie: CTK=6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4 --data {"jobName": "ene-ats-integration-batch-prod-uber-stage5362df53-ad63-4c7a-9be1-f2b33fc83e74_20250615", "jobQueue": "ene-ats-integration-batch-prod-uber-stage", "jobDefinition": "ene-ats-integration-batch-prod", "envVars": {"spring.config.import": "configserver:http://spring-config-server.prod.joveo.com:8888/", "SPRING_CONFIG_SERVER_URL": "spring-config-server.prod.joveo.com", "ENVIRONMENT": "production", "name": "ADECCO_BULLHORN_APPLY_EVENT_SYNCER", "JOVEO_ENV": "production", "id": "funneltracking/bullhorn/adecco/GeneralStaffing/BH_AGS_JOB_SUBMISSION_JOVEO_OUT_20250615.csv$5362df53-ad63-4c7a-9be1-f2b33fc83e74,78a64614-9ca3-4b42-824c-4aac37237984,51a55bc3-c156-4c8f-9f6e-1bbe7f496d0f", "SPRING_CONFIG_SERVER_PORT": "8888", "receiptHandle": "test"}}
+[2025-06-23 18:37:26 UTC] [CRITICAL] Unexpected error processing date 20250615: Command '['curl', '-v', '--max-time', '120', '--connect-timeout', '30', '--retry', '3', '--retry-delay', '5', '--location', 'https://ene-apply-batch-orchestrator.prod.joveo.com/api/trigger', '--header', 'Content-Type: application/json', '--header', 'Cookie: CTK=6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4', '--data', '{"jobName": "ene-ats-integration-batch-prod-uber-stage5362df53-ad63-4c7a-9be1-f2b33fc83e74_20250615", "jobQueue": "ene-ats-integration-batch-prod-uber-stage", "jobDefinition": "ene-ats-integration-batch-prod", "envVars": {"spring.config.import": "configserver:http://spring-config-server.prod.joveo.com:8888/", "SPRING_CONFIG_SERVER_URL": "spring-config-server.prod.joveo.com", "ENVIRONMENT": "production", "name": "ADECCO_BULLHORN_APPLY_EVENT_SYNCER", "JOVEO_ENV": "production", "id": "funneltracking/bullhorn/adecco/GeneralStaffing/BH_AGS_JOB_SUBMISSION_JOVEO_OUT_20250615.csv$5362df53-ad63-4c7a-9be1-f2b33fc83e74,78a64614-9ca3-4b42-824c-4aac37237984,51a55bc3-c156-4c8f-9f6e-1bbe7f496d0f", "SPRING_CONFIG_SERVER_PORT": "8888", "receiptHandle": "test"}}']' timed out after 45 seconds
+[2025-06-23 18:37:26 UTC] [CRITICAL] Aborting: 3 consecutive failures reached
+[2025-06-23 18:37:26 UTC] [INFO] Processing complete for this run.
+[2025-06-23 18:45:41 UTC] [DEBUG] Loaded existing state: {
+  "current_date": "20250615",
+  "start_date": "20250615",
+  "end_date": "20250623",
+  "processed_dates": [],
+  "failed_attempts": {
+    "20250615": 4
+  },
+  "last_run": "2025-06-23T18:36:41.959947",
+  "consecutive_failures": 4
+}
+[2025-06-23 18:45:41 UTC] [INFO] Attempting to process date: 20250615
+[2025-06-23 18:45:41 UTC] [DEBUG] API Command: curl -v --max-time 120 --connect-timeout 30 --retry 3 --retry-delay 5 --location https://ene-apply-batch-orchestrator.prod.joveo.com/api/trigger --header Content-Type: application/json --header Cookie: CTK=6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4 --data {"jobName": "ene-ats-integration-batch-prod-uber-stage5362df53-ad63-4c7a-9be1-f2b33fc83e74_20250615", "jobQueue": "ene-ats-integration-batch-prod-uber-stage", "jobDefinition": "ene-ats-integration-batch-prod", "envVars": {"spring.config.import": "configserver:http://spring-config-server.prod.joveo.com:8888/", "SPRING_CONFIG_SERVER_URL": "spring-config-server.prod.joveo.com", "ENVIRONMENT": "production", "name": "ADECCO_BULLHORN_APPLY_EVENT_SYNCER", "JOVEO_ENV": "production", "id": "funneltracking/bullhorn/adecco/GeneralStaffing/BH_AGS_JOB_SUBMISSION_JOVEO_OUT_20250615.csv$5362df53-ad63-4c7a-9be1-f2b33fc83e74,78a64614-9ca3-4b42-824c-4aac37237984,51a55bc3-c156-4c8f-9f6e-1bbe7f496d0f", "SPRING_CONFIG_SERVER_PORT": "8888", "receiptHandle": "test"}}
+[2025-06-23 18:46:27 UTC] [CRITICAL] Unexpected error processing date 20250615: Command '['curl', '-v', '--max-time', '120', '--connect-timeout', '30', '--retry', '3', '--retry-delay', '5', '--location', 'https://ene-apply-batch-orchestrator.prod.joveo.com/api/trigger', '--header', 'Content-Type: application/json', '--header', 'Cookie: CTK=6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4', '--data', '{"jobName": "ene-ats-integration-batch-prod-uber-stage5362df53-ad63-4c7a-9be1-f2b33fc83e74_20250615", "jobQueue": "ene-ats-integration-batch-prod-uber-stage", "jobDefinition": "ene-ats-integration-batch-prod", "envVars": {"spring.config.import": "configserver:http://spring-config-server.prod.joveo.com:8888/", "SPRING_CONFIG_SERVER_URL": "spring-config-server.prod.joveo.com", "ENVIRONMENT": "production", "name": "ADECCO_BULLHORN_APPLY_EVENT_SYNCER", "JOVEO_ENV": "production", "id": "funneltracking/bullhorn/adecco/GeneralStaffing/BH_AGS_JOB_SUBMISSION_JOVEO_OUT_20250615.csv$5362df53-ad63-4c7a-9be1-f2b33fc83e74,78a64614-9ca3-4b42-824c-4aac37237984,51a55bc3-c156-4c8f-9f6e-1bbe7f496d0f", "SPRING_CONFIG_SERVER_PORT": "8888", "receiptHandle": "test"}}']' timed out after 45 seconds
+[2025-06-23 18:46:27 UTC] [CRITICAL] Aborting: 3 consecutive failures reached
+[2025-06-23 18:46:27 UTC] [INFO] Processing complete for this run.
