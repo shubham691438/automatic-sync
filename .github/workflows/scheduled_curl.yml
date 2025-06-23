@@ -21,10 +21,37 @@ jobs:
     - name: Install dependencies
       run: pip install pytz
 
+    - name: Configure Git
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+
     - name: Run cURL with date increment
       env:
-        START_DATE: "20250608"  # Start date in YYYYMMDD format
-        END_DATE: "20250622"    # End date in YYYYMMDD format
-        CTK_COOKIE: "6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4"
+        START_DATE: "20250609"  # Start date in YYYYMMDD format
+        END_DATE: "20250623"    # End date in YYYYMMDD format
+        CTK_COOKIE: ${{ secrets.CTK_COOKIE }}
       run: |
+        echo "Starting workflow run at $(date)"
+        echo "Date range: $START_DATE to $END_DATE"
+        
         python3 .github/scripts/curl_with_date.py "$START_DATE" "$END_DATE" "$CTK_COOKIE"
+        
+        # Commit the log file if it was updated
+        if [[ -f .github/scripts/curl_execution.log ]]; then
+          git add .github/scripts/curl_execution.log
+          git commit -m "Update curl execution log for $(date +%Y%m%d)"
+          git push
+          echo "Pushed updated log file to repository"
+        else
+          echo "No log file changes to commit"
+        fi
+        
+        echo "Workflow completed at $(date)"
+
+    - name: Archive log file
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: curl-execution-logs
+        path: .github/scripts/curl_execution.log
