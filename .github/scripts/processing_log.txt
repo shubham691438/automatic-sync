@@ -1,0 +1,26 @@
+[2025-06-23 14:56:05 UTC] [WARNING] Initializing new state (reason: Expecting value: line 1 column 1 (char 0))
+[2025-06-23 14:56:05 UTC] [INFO] Attempting to process date: 20250611
+[2025-06-23 14:56:05 UTC] [DEBUG] API Command: curl --max-time 120 --connect-timeout 30 --retry 3 --retry-delay 5 --location ene-apply-batch-orchestrator.prod.joveo.com/api/trigger --header Content-Type: application/json --header Cookie: CTK=6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4 --data {
+            "jobName" : "ene-ats-integration-batch-prod-uber-stage5362df53-ad63-4c7a-9be1-f2b33fc83e74_20250611",
+            "jobQueue" : "ene-ats-integration-batch-prod-uber-stage",
+            "jobDefinition" : "ene-ats-integration-batch-prod",
+            "envVars": {
+                "spring.config.import": "configserver:http://spring-config-server.prod.joveo.com:8888/",
+                "SPRING_CONFIG_SERVER_URL": "spring-config-server.prod.joveo.com",
+                "ENVIRONMENT": "production",
+                "name": "ADECCO_BULLHORN_APPLY_EVENT_SYNCER",
+                "JOVEO_ENV": "production",
+                "id": "funneltracking/bullhorn/adecco/GeneralStaffing/BH_AGS_JOB_SUBMISSION_JOVEO_OUT_20250611.csv$5362df53-ad63-4c7a-9be1-f2b33fc83e74,78a64614-9ca3-4b42-824c-4aac37237984,51a55bc3-c156-4c8f-9f6e-1bbe7f496d0f",
+                "SPRING_CONFIG_SERVER_PORT": "8888",
+                "receiptHandle":"test"
+            }
+        }
+[2025-06-23 14:56:06 UTC] [INFO] API call successful for date 20250611. Response: Batch job triggered successfully!...
+[2025-06-23 14:56:06 UTC] [DEBUG] Successfully processed date 20250611. Full response: {
+  "success": true,
+  "status": "SUCCESS",
+  "timestamp": "2025-06-23T14:56:06.780964",
+  "output": "Batch job triggered successfully!",
+  "error": null
+}
+[2025-06-23 14:56:06 UTC] [INFO] Processing complete for this run.
