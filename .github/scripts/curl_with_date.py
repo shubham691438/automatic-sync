@@ -102,7 +102,7 @@ def process_date(date, ctk_cookie):
         '--max-time', '120',
         '--connect-timeout', '30',
         '--retry', '3',
-        '--retry-delay	5',
+        '--retry-delay', '5',
         '--location',
         'ene-apply-batch-orchestrator.prod.joveo.com/api/trigger',
         '--header',
