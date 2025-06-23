@@ -16,13 +16,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Clear DNS cache
+    - name: Verify API endpoint
       run: |
-        sudo systemd-resolve --flush-caches
-        sudo systemctl restart systemd-resolved
+        echo "Testing API connectivity..."
+        if ! curl -m 5 -I https://ene-apply-batch-orchestrator.prod.joveo.com; then
+          echo "API endpoint unreachable"
+          exit 1
+        fi
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -36,17 +38,15 @@ jobs:
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
-        git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com".insteadOf "https://github.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
 
     - name: Process dates
       env:
         START_DATE: "20250610"
         END_DATE: "20250623"
-        CTK_COOKIE: "6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4"
+        CTK_COOKIE: ${{ secrets.CTK_COOKIE }}
       run: |
-        echo "Starting date processing workflow"
-        python3 .github/scripts/curl_with_date.py "$START_DATE" "$END_DATE" "$CTK_COOKIE"
-        
+        python3 .github/scripts/date_processor.py "$START_DATE" "$END_DATE" "$CTK_COOKIE"
         git add .github/scripts/state.json .github/scripts/processing_log.txt
         git commit -m "Update processing state [skip ci]" || echo "No changes to commit"
         git push
