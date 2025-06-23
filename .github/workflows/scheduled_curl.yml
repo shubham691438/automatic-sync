@@ -18,13 +18,6 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Verify API endpoint
-      run: |
-        echo "Testing API connectivity..."
-        if ! curl -m 5 -I https://ene-apply-batch-orchestrator.prod.joveo.com; then
-          echo "API endpoint unreachable"
-          exit 1
-        fi
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -42,9 +35,9 @@ jobs:
 
     - name: Process dates
       env:
-        START_DATE: "20250610"
+        START_DATE: "20250611"
         END_DATE: "20250623"
-        CTK_COOKIE: ${{ secrets.CTK_COOKIE }}
+        CTK_COOKIE: "6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4"
       run: |
         python3 .github/scripts/date_processor.py "$START_DATE" "$END_DATE" "$CTK_COOKIE"
         git add .github/scripts/state.json .github/scripts/processing_log.txt
