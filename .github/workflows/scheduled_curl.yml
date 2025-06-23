@@ -37,7 +37,7 @@ jobs:
       env:
         START_DATE: "20250615"
         END_DATE: "20250623"
-        CTK_COOKIE: "CTK=6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4'"
+        CTK_COOKIE: "CTK=6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4"
       run: |
         python3 .github/scripts/curl_with_date.py "$START_DATE" "$END_DATE" "$CTK_COOKIE"
         git add .github/scripts/state.json .github/scripts/processing_log.txt
