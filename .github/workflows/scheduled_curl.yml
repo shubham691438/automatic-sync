@@ -36,7 +36,7 @@ jobs:
         echo "Date range: $START_DATE to $END_DATE"
         
         # Run the processor script
-        python3 .github/scripts/date_processor.py "$START_DATE" "$END_DATE" "$CTK_COOKIE"
+        python3 .github/scripts/curl_with_date.py "$START_DATE" "$END_DATE" "$CTK_COOKIE"
         
         # Commit any changes
         git add .github/scripts/state.json .github/scripts/processing_log.txt
