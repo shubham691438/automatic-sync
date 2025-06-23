@@ -2,8 +2,11 @@ name: Scheduled Date Processor
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Trigger every 30 minutes
-  workflow_dispatch:        # Allow manual triggers
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   process-dates:
@@ -11,10 +14,18 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4  # Updated to v4
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Clear DNS cache
+      run: |
+        sudo systemd-resolve --flush-caches
+        sudo systemctl restart systemd-resolved
 
     - name: Set up Python
-      uses: actions/setup-python@v5  # Updated to v5
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
@@ -25,29 +36,25 @@ jobs:
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
+        git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com".insteadOf "https://github.com"
 
     - name: Process dates
       env:
-        START_DATE: "20250610"  # YYYYMMDD
-        END_DATE: "20250623"    # YYYYMMDD
+        START_DATE: "20250610"
+        END_DATE: "20250623"
         CTK_COOKIE: "6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4"
       run: |
         echo "Starting date processing workflow"
-        echo "Date range: $START_DATE to $END_DATE"
-        
-        # Run the processor script
         python3 .github/scripts/curl_with_date.py "$START_DATE" "$END_DATE" "$CTK_COOKIE"
         
-        # Commit any changes
         git add .github/scripts/state.json .github/scripts/processing_log.txt
         git commit -m "Update processing state [skip ci]" || echo "No changes to commit"
         git push
 
     - name: Upload logs
-      uses: actions/upload-artifact@v4  # Updated to v4
+      uses: actions/upload-artifact@v4
       with:
         name: processing-artifacts
         path: |
           .github/scripts/state.json
           .github/scripts/processing_log.txt
-        retention-days: 7  # Optional: set artifact retention period

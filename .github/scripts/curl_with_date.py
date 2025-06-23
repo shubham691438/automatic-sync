@@ -99,9 +99,10 @@ def process_date(date, ctk_cookie):
     
     curl_cmd = [
         'curl',
-        '--max-time', '30',
-        '--connect-timeout', '10',
-        '--retry', '2',
+        '--max-time', '120',
+        '--connect-timeout', '30',
+        '--retry', '3',
+        '--retry-delay	5',
         '--location',
         'ene-apply-batch-orchestrator.prod.joveo.com/api/trigger',
         '--header',
