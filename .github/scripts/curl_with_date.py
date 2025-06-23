@@ -98,34 +98,34 @@ def process_date(date, ctk_cookie):
     id_value = f"funneltracking/bullhorn/adecco/GeneralStaffing/BH_AGS_JOB_SUBMISSION_JOVEO_OUT_{date}.csv$5362df53-ad63-4c7a-9be1-f2b33fc83e74,78a64614-9ca3-4b42-824c-4aac37237984,51a55bc3-c156-4c8f-9f6e-1bbe7f496d0f"
     
     curl_cmd = [
-        'curl',
+    'curl',
+        '-v',  
         '--max-time', '120',
         '--connect-timeout', '30',
         '--retry', '3',
         '--retry-delay', '5',
         '--location',
-        'ene-apply-batch-orchestrator.prod.joveo.com/api/trigger',
-        '--header',
-        'Content-Type: application/json',
-        '--header',
-        f'Cookie: CTK={ctk_cookie}',
+        'https://ene-apply-batch-orchestrator.prod.joveo.com/api/trigger',
+        '--header', 'Content-Type: application/json',
+        '--header', f'Cookie: {ctk_cookie}',
         '--data',
-        f'''{{
-            "jobName" : "{job_name}",
-            "jobQueue" : "ene-ats-integration-batch-prod-uber-stage",
-            "jobDefinition" : "ene-ats-integration-batch-prod",
-            "envVars": {{
+        json.dumps({
+            "jobName": job_name,
+            "jobQueue": "ene-ats-integration-batch-prod-uber-stage",
+            "jobDefinition": "ene-ats-integration-batch-prod",
+            "envVars": {
                 "spring.config.import": "configserver:http://spring-config-server.prod.joveo.com:8888/",
                 "SPRING_CONFIG_SERVER_URL": "spring-config-server.prod.joveo.com",
                 "ENVIRONMENT": "production",
                 "name": "ADECCO_BULLHORN_APPLY_EVENT_SYNCER",
                 "JOVEO_ENV": "production",
-                "id": "{id_value}",
+                "id": id_value,
                 "SPRING_CONFIG_SERVER_PORT": "8888",
-                "receiptHandle":"test"
-            }}
-        }}'''
+                "receiptHandle": "test"
+            }
+        })
     ]
+
     
     log(f"Attempting to process date: {date}", "INFO")
     log(f"API Command: {' '.join(curl_cmd)}", "DEBUG")
