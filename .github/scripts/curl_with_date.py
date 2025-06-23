@@ -9,21 +9,33 @@ import subprocess
 STATE_FILE = os.path.join(os.path.dirname(__file__), 'state.json')
 LOG_FILE = os.path.join(os.path.dirname(__file__), 'processing_log.txt')
 
+def validate_date(date_str):
+    """Validate YYYYMMDD date format"""
+    try:
+        datetime.strptime(date_str, "%Y%m%d")
+        return True
+    except ValueError:
+        return False
+
 def log(message):
     """Log messages with timestamp"""
     timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
     log_entry = f"[{timestamp}] {message}"
     print(log_entry)
-    with open(LOG_FILE, 'a') as f:
-        f.write(log_entry + "\n")
+    try:
+        with open(LOG_FILE, 'a') as f:
+            f.write(log_entry + "\n")
+    except IOError as e:
+        print(f"Failed to write to log file: {e}")
 
 def load_state(start_date, end_date):
     """Load or initialize processing state"""
     try:
         with open(STATE_FILE, 'r') as f:
             state = json.load(f)
-        log(f"Loaded existing state: {state}")
-    except (FileNotFoundError, json.JSONDecodeError):
+        log(f"Loaded existing state: {json.dumps(state, indent=2)}")
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        log(f"Initializing new state (reason: {str(e)})")
         state = {
             "current_date": start_date,
             "start_date": start_date,
@@ -31,13 +43,15 @@ def load_state(start_date, end_date):
             "processed_dates": [],
             "last_run": None
         }
-        log("Initialized new state")
     return state
 
 def save_state(state):
     """Save processing state"""
-    with open(STATE_FILE, 'w') as f:
-        json.dump(state, f, indent=2)
+    try:
+        with open(STATE_FILE, 'w') as f:
+            json.dump(state, f, indent=2)
+    except IOError as e:
+        log(f"Failed to save state: {e}")
 
 def date_range(start, end):
     """Generate dates from start to end (YYYYMMDD format)"""
@@ -56,6 +70,7 @@ def process_date(date, ctk_cookie):
     
     curl_cmd = [
         'curl',
+        '--max-time', '30',  # 30 second timeout
         '--location',
         'ene-apply-batch-orchestrator.prod.joveo.com/api/trigger',
         '--header',
@@ -100,6 +115,10 @@ def main():
     end_date = sys.argv[2]
     ctk_cookie = sys.argv[3]
     
+    if not all(validate_date(d) for d in [start_date, end_date]):
+        log("Error: Dates must be in YYYYMMDD format")
+        sys.exit(1)
+    
     state = load_state(start_date, end_date)
     state['last_run'] = datetime.utcnow().isoformat()
     
@@ -111,7 +130,7 @@ def main():
             state['current_date'] = (datetime.strptime(date, "%Y%m%d") + timedelta(days=1)).strftime("%Y%m%d")
             save_state(state)
             log(f"Successfully processed date {date}. Updated state.")
-            break  # Process one date per workflow run
+            break
         else:
             log(f"Failed to process date {date}. Will retry next run.")
             break
