@@ -1,9 +1,12 @@
 {
-  "current_date": "20250609",
+  "current_date": "20250610",
   "start_date": "20250608",
   "end_date": "20250623",
   "processed_dates": [
-    "20250608"
+    "20250608",
+    "20250609"
   ],
-  "last_run": "2025-06-23T12:08:23.573400"
+  "failed_attempts": {},
+  "last_run": "2025-06-23T12:24:40.731053",
+  "consecutive_failures": 0
 }

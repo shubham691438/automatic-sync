@@ -28,7 +28,7 @@ jobs:
 
     - name: Process dates
       env:
-        START_DATE: "20250608"  # YYYYMMDD
+        START_DATE: "202506010"  # YYYYMMDD
         END_DATE: "20250623"    # YYYYMMDD
         CTK_COOKIE: "6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4"
       run: |

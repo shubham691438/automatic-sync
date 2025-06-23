@@ -18,3 +18,65 @@
 [2025-06-23 12:08:25 UTC] Success: Batch job triggered successfully!
 [2025-06-23 12:08:25 UTC] Successfully processed date 20250608. Updated state.
 [2025-06-23 12:08:25 UTC] Processing complete for this run.
+[2025-06-23 12:14:26 UTC] [WARNING] Initializing new state (reason: Invalid state structure)
+[2025-06-23 12:14:26 UTC] [INFO] Attempting to process date: 20250608
+[2025-06-23 12:14:26 UTC] [DEBUG] API Command: curl --max-time 30 --connect-timeout 10 --retry 2 --location ene-apply-batch-orchestrator.prod.joveo.com/api/trigger --header Content-Type: application/json --header Cookie: CTK=6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4 --data {
+            "jobName" : "ene-ats-integration-batch-prod-uber-stage5362df53-ad63-4c7a-9be1-f2b33fc83e74_20250608",
+            "jobQueue" : "ene-ats-integration-batch-prod-uber-stage",
+            "jobDefinition" : "ene-ats-integration-batch-prod",
+            "envVars": {
+                "spring.config.import": "configserver:http://spring-config-server.prod.joveo.com:8888/",
+                "SPRING_CONFIG_SERVER_URL": "spring-config-server.prod.joveo.com",
+                "ENVIRONMENT": "production",
+                "name": "ADECCO_BULLHORN_APPLY_EVENT_SYNCER",
+                "JOVEO_ENV": "production",
+                "id": "funneltracking/bullhorn/adecco/GeneralStaffing/BH_AGS_JOB_SUBMISSION_JOVEO_OUT_20250608.csv$5362df53-ad63-4c7a-9be1-f2b33fc83e74,78a64614-9ca3-4b42-824c-4aac37237984,51a55bc3-c156-4c8f-9f6e-1bbe7f496d0f",
+                "SPRING_CONFIG_SERVER_PORT": "8888",
+                "receiptHandle":"test"
+            }
+        }
+[2025-06-23 12:14:26 UTC] [INFO] API call successful for date 20250608. Response: Batch job triggered successfully!...
+[2025-06-23 12:14:26 UTC] [DEBUG] Successfully processed date 20250608. Full response: {
+  "success": true,
+  "status": "SUCCESS",
+  "timestamp": "2025-06-23T12:14:26.970684",
+  "output": "Batch job triggered successfully!",
+  "error": null
+}
+[2025-06-23 12:14:26 UTC] [INFO] Processing complete for this run.
+[2025-06-23 12:24:40 UTC] [DEBUG] Loaded existing state: {
+  "current_date": "20250609",
+  "start_date": "20250608",
+  "end_date": "20250623",
+  "processed_dates": [
+    "20250608"
+  ],
+  "failed_attempts": {},
+  "last_run": "2025-06-23T12:14:26.063643",
+  "consecutive_failures": 0
+}
+[2025-06-23 12:24:40 UTC] [INFO] Attempting to process date: 20250609
+[2025-06-23 12:24:40 UTC] [DEBUG] API Command: curl --max-time 30 --connect-timeout 10 --retry 2 --location ene-apply-batch-orchestrator.prod.joveo.com/api/trigger --header Content-Type: application/json --header Cookie: CTK=6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4 --data {
+            "jobName" : "ene-ats-integration-batch-prod-uber-stage5362df53-ad63-4c7a-9be1-f2b33fc83e74_20250609",
+            "jobQueue" : "ene-ats-integration-batch-prod-uber-stage",
+            "jobDefinition" : "ene-ats-integration-batch-prod",
+            "envVars": {
+                "spring.config.import": "configserver:http://spring-config-server.prod.joveo.com:8888/",
+                "SPRING_CONFIG_SERVER_URL": "spring-config-server.prod.joveo.com",
+                "ENVIRONMENT": "production",
+                "name": "ADECCO_BULLHORN_APPLY_EVENT_SYNCER",
+                "JOVEO_ENV": "production",
+                "id": "funneltracking/bullhorn/adecco/GeneralStaffing/BH_AGS_JOB_SUBMISSION_JOVEO_OUT_20250609.csv$5362df53-ad63-4c7a-9be1-f2b33fc83e74,78a64614-9ca3-4b42-824c-4aac37237984,51a55bc3-c156-4c8f-9f6e-1bbe7f496d0f",
+                "SPRING_CONFIG_SERVER_PORT": "8888",
+                "receiptHandle":"test"
+            }
+        }
+[2025-06-23 12:24:41 UTC] [INFO] API call successful for date 20250609. Response: Batch job triggered successfully!...
+[2025-06-23 12:24:41 UTC] [DEBUG] Successfully processed date 20250609. Full response: {
+  "success": true,
+  "status": "SUCCESS",
+  "timestamp": "2025-06-23T12:24:41.735793",
+  "output": "Batch job triggered successfully!",
+  "error": null
+}
+[2025-06-23 12:24:41 UTC] [INFO] Processing complete for this run.
