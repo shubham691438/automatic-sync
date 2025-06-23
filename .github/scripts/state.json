@@ -7,8 +7,8 @@
     "20250609"
   ],
   "failed_attempts": {
-    "20250610": 2
+    "20250610": 3
   },
-  "last_run": "2025-06-23T14:23:44.300250",
-  "consecutive_failures": 2
+  "last_run": "2025-06-23T14:35:28.130529",
+  "consecutive_failures": 3
 }
