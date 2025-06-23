@@ -4,8 +4,8 @@
   "end_date": "20250623",
   "processed_dates": [],
   "failed_attempts": {
-    "20250615": 2
+    "20250615": 3
   },
-  "last_run": "2025-06-23T18:31:26.073998",
-  "consecutive_failures": 2
+  "last_run": "2025-06-23T18:32:46.618900",
+  "consecutive_failures": 3
 }
