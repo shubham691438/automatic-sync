@@ -136,7 +136,7 @@ def process_date(date, ctk_cookie):
             check=True,
             capture_output=True,
             text=True,
-            timeout=45  # Overall timeout
+            timeout=400  # Overall timeout
         )
         
         response = {
