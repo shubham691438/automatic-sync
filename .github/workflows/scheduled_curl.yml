@@ -1,12 +1,12 @@
-name: Scheduled cURL with Date Increment
+name: Scheduled Date Processor
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Runs every 30 minutes
-  workflow_dispatch:  # Allows manual triggering
+    - cron: '*/30 * * * *'  # Trigger every 30 minutes
+  workflow_dispatch:        # Allow manual triggers
 
 jobs:
-  trigger-curl:
+  process-dates:
     runs-on: ubuntu-latest
     
     steps:
@@ -26,32 +26,27 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
 
-    - name: Run cURL with date increment
+    - name: Process dates
       env:
-        START_DATE: "20250609"  # Start date in YYYYMMDD format
-        END_DATE: "20250623"    # End date in YYYYMMDD format
-        CTK_COOKIE: ${{ secrets.CTK_COOKIE }}
+        START_DATE: "20250608"  # YYYYMMDD
+        END_DATE: "20250630"    # YYYYMMDD
+        CTK_COOKIE: "6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4"
       run: |
-        echo "Starting workflow run at $(date)"
+        echo "Starting date processing workflow"
         echo "Date range: $START_DATE to $END_DATE"
         
-        python3 .github/scripts/curl_with_date.py "$START_DATE" "$END_DATE" "$CTK_COOKIE"
+        # Run the processor script
+        python3 .github/scripts/date_processor.py "$START_DATE" "$END_DATE" "$CTK_COOKIE"
         
-        # Commit the log file if it was updated
-        if [[ -f .github/scripts/curl_execution.log ]]; then
-          git add .github/scripts/curl_execution.log
-          git commit -m "Update curl execution log for $(date +%Y%m%d)"
-          git push
-          echo "Pushed updated log file to repository"
-        else
-          echo "No log file changes to commit"
-        fi
-        
-        echo "Workflow completed at $(date)"
+        # Commit any changes
+        git add .github/scripts/state.json .github/scripts/processing_log.txt
+        git commit -m "Update processing state [skip ci]" || echo "No changes to commit"
+        git push
 
-    - name: Archive log file
+    - name: Upload logs
       uses: actions/upload-artifact@v3
-      if: always()
       with:
-        name: curl-execution-logs
-        path: .github/scripts/curl_execution.log
+        name: processing-artifacts
+        path: |
+          .github/scripts/state.json
+          .github/scripts/processing_log.txt

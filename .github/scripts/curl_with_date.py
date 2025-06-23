@@ -1,38 +1,60 @@
 import os
 import sys
+import json
 import datetime
-import pytz
+from datetime import datetime, timedelta
 import subprocess
-from datetime import timedelta
 
-LOG_FILE = os.path.join(os.path.dirname(__file__), 'curl_execution.log')
+# File paths
+STATE_FILE = os.path.join(os.path.dirname(__file__), 'state.json')
+LOG_FILE = os.path.join(os.path.dirname(__file__), 'processing_log.txt')
 
-def log_message(message):
-    """Log messages to both console and log file"""
-    timestamp = datetime.datetime.now(pytz.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
-    log_entry = f"[{timestamp}] {message}\n"
-    
-    print(log_entry.strip())
-    
+def log(message):
+    """Log messages with timestamp"""
+    timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+    log_entry = f"[{timestamp}] {message}"
+    print(log_entry)
     with open(LOG_FILE, 'a') as f:
-        f.write(log_entry)
+        f.write(log_entry + "\n")
 
-def increment_date(date_str):
-    """Increment date in YYYYMMDD format by one day"""
-    date = datetime.datetime.strptime(date_str, "%Y%m%d")
-    next_date = date + timedelta(days=1)
-    return next_date.strftime("%Y%m%d")
+def load_state(start_date, end_date):
+    """Load or initialize processing state"""
+    try:
+        with open(STATE_FILE, 'r') as f:
+            state = json.load(f)
+        log(f"Loaded existing state: {state}")
+    except (FileNotFoundError, json.JSONDecodeError):
+        state = {
+            "current_date": start_date,
+            "start_date": start_date,
+            "end_date": end_date,
+            "processed_dates": [],
+            "last_run": None
+        }
+        log("Initialized new state")
+    return state
 
-def get_current_date():
-    """Get current date in YYYYMMDD format"""
-    return datetime.datetime.now(pytz.utc).strftime("%Y%m%d")
+def save_state(state):
+    """Save processing state"""
+    with open(STATE_FILE, 'w') as f:
+        json.dump(state, f, indent=2)
 
-def generate_curl_command(current_date, ctk_cookie):
-    """Generate the curl command with the current date"""
-    job_name = f"ene-ats-integration-batch-prod-uber-stage5362df53-ad63-4c7a-9be1-f2b33fc83e74_{current_date}"
-    id_value = f"funneltracking/bullhorn/adecco/GeneralStaffing/BH_AGS_JOB_SUBMISSION_JOVEO_OUT_{current_date}.csv$5362df53-ad63-4c7a-9be1-f2b33fc83e74,78a64614-9ca3-4b42-824c-4aac37237984,51a55bc3-c156-4c8f-9f6e-1bbe7f496d0f"
+def date_range(start, end):
+    """Generate dates from start to end (YYYYMMDD format)"""
+    start_dt = datetime.strptime(start, "%Y%m%d")
+    end_dt = datetime.strptime(end, "%Y%m%d")
+    current_dt = start_dt
     
-    curl_command = [
+    while current_dt <= end_dt:
+        yield current_dt.strftime("%Y%m%d")
+        current_dt += timedelta(days=1)
+
+def process_date(date, ctk_cookie):
+    """Execute the curl command for a specific date"""
+    job_name = f"ene-ats-integration-batch-prod-uber-stage5362df53-ad63-4c7a-9be1-f2b33fc83e74_{date}"
+    id_value = f"funneltracking/bullhorn/adecco/GeneralStaffing/BH_AGS_JOB_SUBMISSION_JOVEO_OUT_{date}.csv$5362df53-ad63-4c7a-9be1-f2b33fc83e74,78a64614-9ca3-4b42-824c-4aac37237984,51a55bc3-c156-4c8f-9f6e-1bbe7f496d0f"
+    
+    curl_cmd = [
         'curl',
         '--location',
         'ene-apply-batch-orchestrator.prod.joveo.com/api/trigger',
@@ -58,54 +80,44 @@ def generate_curl_command(current_date, ctk_cookie):
         }}'''
     ]
     
-    return curl_command
+    log(f"Executing for date: {date}")
+    log(f"Command: {' '.join(curl_cmd)}")
+    
+    try:
+        result = subprocess.run(curl_cmd, check=True, capture_output=True, text=True)
+        log(f"Success: {result.stdout}")
+        return True
+    except subprocess.CalledProcessError as e:
+        log(f"Error: {e.stderr}")
+        return False
 
 def main():
-    log_message("Script execution started")
-    
     if len(sys.argv) < 4:
-        log_message("Error: Missing arguments. Usage: python curl_with_date.py <start_date> <end_date> <ctk_cookie>")
+        log("Error: Missing arguments. Usage: python date_processor.py <start_date> <end_date> <ctk_cookie>")
         sys.exit(1)
     
     start_date = sys.argv[1]
     end_date = sys.argv[2]
     ctk_cookie = sys.argv[3]
     
-    log_message(f"Received parameters - Start Date: {start_date}, End Date: {end_date}")
+    state = load_state(start_date, end_date)
+    state['last_run'] = datetime.utcnow().isoformat()
     
-    # Get the current date (UTC)
-    current_date = get_current_date()
-    log_message(f"Current system date (UTC): {current_date}")
+    # Process the next date in sequence
+    for date in date_range(state['current_date'], end_date):
+        success = process_date(date, ctk_cookie)
+        if success:
+            state['processed_dates'].append(date)
+            state['current_date'] = (datetime.strptime(date, "%Y%m%d") + timedelta(days=1)).strftime("%Y%m%d")
+            save_state(state)
+            log(f"Successfully processed date {date}. Updated state.")
+            break  # Process one date per workflow run
+        else:
+            log(f"Failed to process date {date}. Will retry next run.")
+            break
     
-    # Check if current date is within range
-    if start_date <= current_date <= end_date:
-        log_message(f"Current date is within range. Preparing cURL command for date: {current_date}")
-        
-        curl_cmd = generate_curl_command(current_date, ctk_cookie)
-        
-        log_message("Generated cURL command:")
-        log_message(" ".join(curl_cmd))
-        
-        # Execute the curl command
-        try:
-            log_message("Executing cURL command...")
-            result = subprocess.run(curl_cmd, check=True, capture_output=True, text=True)
-            
-            log_message("cURL command executed successfully")
-            log_message(f"Response: {result.stdout}")
-            
-            # Update the last successful run date
-            with open(LOG_FILE, 'a') as f:
-                f.write(f"\nLast successful execution for date: {current_date}\n")
-                f.write(f"Command: {' '.join(curl_cmd)}\n")
-                f.write(f"Response: {result.stdout}\n")
-            
-        except subprocess.CalledProcessError as e:
-            log_message(f"Error executing cURL command: {e.stderr}")
-            sys.exit(1)
-    else:
-        log_message(f"Current date {current_date} is outside the specified range ({start_date} to {end_date}). No action taken.")
-        sys.exit(0)
+    save_state(state)
+    log("Processing complete for this run.")
 
 if __name__ == "__main__":
     main()
