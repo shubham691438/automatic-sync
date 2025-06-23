@@ -11,10 +11,10 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4  # Updated to v4
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5  # Updated to v5
       with:
         python-version: '3.10'
 
@@ -28,7 +28,7 @@ jobs:
 
     - name: Process dates
       env:
-        START_DATE: "20250608"  # YYYYMMDD
+        START_DATE: "20250607"  # YYYYMMDD
         END_DATE: "20250630"    # YYYYMMDD
         CTK_COOKIE: "6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4"
       run: |
@@ -44,9 +44,10 @@ jobs:
         git push
 
     - name: Upload logs
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4  # Updated to v4
       with:
         name: processing-artifacts
         path: |
           .github/scripts/state.json
           .github/scripts/processing_log.txt
+        retention-days: 7  # Optional: set artifact retention period
