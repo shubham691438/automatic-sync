@@ -6,7 +6,9 @@
     "20250608",
     "20250609"
   ],
-  "failed_attempts": {},
-  "last_run": "2025-06-23T12:24:40.731053",
-  "consecutive_failures": 0
+  "failed_attempts": {
+    "20250610": 1
+  },
+  "last_run": "2025-06-23T14:19:43.358448",
+  "consecutive_failures": 1
 }
