@@ -945,3 +945,159 @@ curl: (28) Failed to connect to ene-apply-batch-orchestrator.prod.joveo.com port
 
 [2025-06-23 21:40:29 UTC] [CRITICAL] Aborting: 3 consecutive failures reached
 [2025-06-23 21:40:29 UTC] [INFO] Processing complete for this run.
+[2025-06-23 22:16:05 UTC] [DEBUG] Loaded existing state: {
+  "current_date": "20250616",
+  "start_date": "20250615",
+  "end_date": "20250623",
+  "processed_dates": [
+    "20250615"
+  ],
+  "failed_attempts": {
+    "20250615": 5,
+    "20250616": 6
+  },
+  "last_run": "2025-06-23T21:38:49.916813",
+  "consecutive_failures": 6
+}
+[2025-06-23 22:16:05 UTC] [INFO] Attempting to process date: 20250616
+[2025-06-23 22:16:05 UTC] [DEBUG] API Command: curl -v --max-time 120 --connect-timeout 30 --retry 2 --retry-delay 5 --location https://ene-apply-batch-orchestrator.prod.joveo.com/api/trigger --header Content-Type: application/json --header Cookie: CTK=6eba6e8d-f062-4b41-98db-61114f7c70fe; CTK=9edaf044-99b8-4ce0-901a-ed9f3f3b5bf4 --data {"jobName": "ene-ats-integration-batch-prod-uber-stage5362df53-ad63-4c7a-9be1-f2b33fc83e74_20250616", "jobQueue": "ene-ats-integration-batch-prod-uber-stage", "jobDefinition": "ene-ats-integration-batch-prod", "envVars": {"spring.config.import": "configserver:http://spring-config-server.prod.joveo.com:8888/", "SPRING_CONFIG_SERVER_URL": "spring-config-server.prod.joveo.com", "ENVIRONMENT": "production", "name": "ADECCO_BULLHORN_APPLY_EVENT_SYNCER", "JOVEO_ENV": "production", "id": "funneltracking/bullhorn/adecco/GeneralStaffing/BH_AGS_JOB_SUBMISSION_JOVEO_OUT_20250616.csv$5362df53-ad63-4c7a-9be1-f2b33fc83e74,78a64614-9ca3-4b42-824c-4aac37237984,51a55bc3-c156-4c8f-9f6e-1bbe7f496d0f", "SPRING_CONFIG_SERVER_PORT": "8888", "receiptHandle": "test"}}
+[2025-06-23 22:17:45 UTC] [ERROR] API call failed for date 20250616. Error:   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0* Host ene-apply-batch-orchestrator.prod.joveo.com:443 was resolved.
+* IPv6: (none)
+* IPv4: 172.31.76.199, 172.31.137.158, 172.31.100.142
+*   Trying 172.31.76.199:443...
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:03 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:04 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:05 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:06 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:07 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:08 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:09 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:10 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:11 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:12 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:13 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:14 --:--:--     0* ipv4 connect timeout after 14921ms, move on!
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:15 --:--:--     0*   Trying 172.31.137.158:443...
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:16 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:17 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:18 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:19 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:20 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:21 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:22 --:--:--     0* ipv4 connect timeout after 7459ms, move on!
+*   Trying 172.31.100.142:443...
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:23 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:24 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:25 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:26 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:27 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:28 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:29 --:--:--     0* ipv4 connect timeout after 7459ms, move on!
+* Failed to connect to ene-apply-batch-orchestrator.prod.joveo.com port 443 after 30001 ms: Timeout was reached
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:30 --:--:--     0
+* Closing connection
+curl: (28) Failed to connect to ene-apply-batch-orchestrator.prod.joveo.com port 443 after 30001 ms: Timeout was reached
+Warning: Problem : timeout. Will retry in 5 seconds. 2 retries left.
+* Hostname ene-apply-batch-orchestrator.prod.joveo.com was found in DNS cache
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying 172.31.76.199:443...
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:03 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:04 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:05 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:06 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:07 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:08 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:09 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:10 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:11 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:12 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:13 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:14 --:--:--     0* ipv4 connect timeout after 15000ms, move on!
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:15 --:--:--     0*   Trying 172.31.137.158:443...
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:16 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:17 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:18 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:19 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:20 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:21 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:22 --:--:--     0* ipv4 connect timeout after 7499ms, move on!
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:22 --:--:--     0*   Trying 172.31.100.142:443...
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:23 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:24 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:25 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:26 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:27 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:28 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:29 --:--:--     0* ipv4 connect timeout after 7496ms, move on!
+* Failed to connect to ene-apply-batch-orchestrator.prod.joveo.com port 443 after 30001 ms: Timeout was reached
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:30 --:--:--     0
+* Closing connection
+curl: (28) Failed to connect to ene-apply-batch-orchestrator.prod.joveo.com port 443 after 30001 ms: Timeout was reached
+Warning: Problem : timeout. Will retry in 5 seconds. 1 retries left.
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0* Host ene-apply-batch-orchestrator.prod.joveo.com:443 was resolved.
+* IPv6: (none)
+* IPv4: 172.31.76.199, 172.31.137.158, 172.31.100.142
+*   Trying 172.31.76.199:443...
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:03 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:04 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:05 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:06 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:07 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:08 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:09 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:10 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:11 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:12 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:13 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:14 --:--:--     0* ipv4 connect timeout after 14919ms, move on!
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:15 --:--:--     0*   Trying 172.31.137.158:443...
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:16 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:17 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:18 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:19 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:20 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:21 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:22 --:--:--     0* ipv4 connect timeout after 7458ms, move on!
+*   Trying 172.31.100.142:443...
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:23 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:24 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:25 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:26 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:27 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:28 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:29 --:--:--     0* ipv4 connect timeout after 7458ms, move on!
+* Failed to connect to ene-apply-batch-orchestrator.prod.joveo.com port 443 after 30000 ms: Timeout was reached
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:30 --:--:--     0
+* Closing connection
+curl: (28) Failed to connect to ene-apply-batch-orchestrator.prod.joveo.com port 443 after 30000 ms: Timeout was reached
+
+[2025-06-23 22:17:45 UTC] [CRITICAL] Aborting: 3 consecutive failures reached
+[2025-06-23 22:17:45 UTC] [INFO] Processing complete for this run.
